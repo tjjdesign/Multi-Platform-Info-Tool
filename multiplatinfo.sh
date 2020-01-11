@@ -14,6 +14,7 @@ function get_IP_addresses () {
 #adds timestamp, runs functions, outputs to system.info, then cats file to clbin
 (date & printf "\n") >> system.info
 get_hostname >> system.info
+sleep 1
 get_IP_addresses >> system.info
 cat system.info | curl -F 'clbin=<-' https://clbin.com
 
