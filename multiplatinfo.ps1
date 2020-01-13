@@ -7,7 +7,7 @@ $outfile = "system.info"
 
 Get-NetIPAddress -AddressFamily IPv4 | Select-Object IPAddress | Out-File -FilePath $outfile -Append
 
-Get-ChildItem -Path "C:\Users" | Select-Object @{Name="User Name"; Expression = {($_.Name)}} | Out-File -FilePath $outfile -Append
+Get-ChildItem -Path "C:\Users" | Select-Object @{Name="Users in C:\Users"; Expression = {($_.Name)}} | Out-File -FilePath $outfile -Append
 
 $openports = Get-NetTCPConnection -State Listen, Established 
 
