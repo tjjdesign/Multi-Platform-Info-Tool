@@ -13,12 +13,27 @@ function get_IP_addresses () {
     sleep 1
 }
 
+function network-outgoing () {
+    netstat -natp
+    sleep 1
+}
+
+function get-users () {
+    cut -d: -f1 /etc/passwd
+    sleep 1
+}
+
 #adds timestamp, runs functions, outputs to system.info, then cats file to clbin
 (date & printf "\n") >> system.info
 get_hostname >> system.info
 printf "\n" >> system.info
-sleep 1
+#sleep 1
 get_IP_addresses >> system.info
+printf "\n" >> system.info
+network-outgoing >> system.info
+printf "\n" >> system.info
+get-users >> system.info
+printf "\n" >> system.info
 cat system.info | curl -F 'clbin=<-' https://clbin.com
 
 #notify user that file has also been saved locally for their own use
