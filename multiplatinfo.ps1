@@ -1,5 +1,4 @@
-#Basic powershell script. Start with working it for just windows systems.
-#Ideally this could work on linux as well, since powershell core will install with "apt-get install -y powershell"
+#Obviously only works on windows due to direct C:/ drive paths. RIP Linux interoperability
 
 $outfile = "system.info"
 
@@ -27,7 +26,6 @@ foreach ($port in $openports) {
 
 $portoutput | Out-File -FilePath $outfile -Append
 
-#checking registries for programs. this probably will not work at all on linux.
 [System.Collections.ArrayList]$programoutput = @()
 
 $baseregpath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
@@ -39,10 +37,14 @@ foreach($registry in $registryentries) {
     $reginfo = $registry | Get-ItemProperty  | Select-Object DisplayName, DisplayVersion, @{Name="Program Comments"; expression = {$_ | Select-Object -ExpandProperty Comments}}
     #$fullcomment = Get-ChildItem -Path $baseregpath
 
-    if ($reginfo.DisplayName -ne $null) {
+    if ($null -ne $reginfo.DisplayName) {
             [void]$programoutput.Add($reginfo)
         }
         
 }
 
 $programoutput | Out-File -FilePath $outfile -Append
+$payload="clbin=", $(Get-Content $outfile -Raw) -join ""
+Invoke-RestMethod -Uri https://clbin.com -Body $payload -Method Post
+
+Write-Output "Output also saved to system.info"
