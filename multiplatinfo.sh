@@ -42,6 +42,7 @@ function services () {
 }
 
 #adds timestamp, runs functions, outputs to system.info, then cats file to clbin
+printf "Multi-Platform-Info-Tool. Find all the infos.\n"
 (date & printf "\n") >> system.info
 
 get_hostname >> system.info
