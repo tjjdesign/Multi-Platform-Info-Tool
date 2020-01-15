@@ -2,10 +2,7 @@
 
 $outfile = "system.info"
 
-Write-Output "Multi-Platform-Info-Tool. Find all the infos." | Out-File -FilePath $outfile
-Get-Date | Out-File -FilePath $outfile -Append
-
-[PSCustomObject]@{ComputerName = $env:COMPUTERNAME} | Out-File -FilePath $outfile -Append
+[PSCustomObject]@{ComputerName = $env:COMPUTERNAME} | Out-File -FilePath $outfile
 
 Get-NetIPAddress -AddressFamily IPv4 | Select-Object IPAddress | Out-File -FilePath $outfile -Append
 
