@@ -2,7 +2,7 @@
 
 #hostname function
 function get_hostname (){
-    hostname & printf "\n"
+    printf "System name:\n" && hostname & printf "\n"
     sleep 1
 }
 
